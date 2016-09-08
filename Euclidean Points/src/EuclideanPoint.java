@@ -30,6 +30,35 @@ public class EuclideanPoint {
 	}
 
 	/**
+	 * Euclidean points midpoint computation
+	 * 
+	 * @param p - the other euclidean point
+	 * @return the midpoint between the two euclidean points
+	 */
+	public double[] midPoint(EuclideanPoint p) {
+		if (this.dimensions == p.dimensions) { //If the dimensions are the same, then proceed with midpoint calculation
+			double[] returnArray = new double[this.dimensions];
+			for (int i = 0; i < dimensions; i++) {
+				returnArray[i] = (this.coordinates[i] + p.coordinates[i]) / 2; //Average each coordinate
+			}
+			return returnArray;
+		} else {
+			//Warn user
+			System.out.println(
+					"Assuming that you would like to place the points in the same space, with the same number of dimensions. Disregarding extra dimensions");
+			int ldim = 0;
+			//Proceed with computation, whilst ignoring the additional dimensions
+			if(p.dimensions<this.dimensions) ldim = p.dimensions;
+			else ldim = this.dimensions;
+			double[] returnArray = new double[ldim];
+			for(int i = 0; i<ldim; i++){
+				returnArray[i] = (this.coordinates[i] + p.coordinates[i]) / 2;
+			}
+			return returnArray;
+		}
+	}
+
+	/**
 	 * Find the distance between two Euclidean Points
 	 * 
 	 * @param p

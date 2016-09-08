@@ -26,6 +26,7 @@ public class Driver {
 	 * 		error message 
 	 * 		1.0 
 	 * 		5rt2, rounded
+	 * 		0.0,4.5
 	 * 
 	 * @param args
 	 *            Has no function
@@ -44,5 +45,9 @@ public class Driver {
 		// output and computation
 		System.out.println(p1.distanceTo(p2));
 		System.out.println(p2.distanceTo(p3));
+		double[] md = p1.midPoint(p2);
+		for(int i = 0; i<md.length;i++){
+			System.out.print(md[i] + ",");
+		}
 	}
 }
