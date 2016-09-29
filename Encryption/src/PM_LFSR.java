@@ -1,0 +1,94 @@
+/**
+ * 1. PM_LFSR data type. Your first task is to write a data type that simulates the
+ * operation of a PM_LFSR 2. A client to encrypt and decrypt images: write a PM_LFSR
+ * client PM_PhotoMagic.java
+ * 
+ * Extra credit. Using a short binary password is weak protection and using a
+ * long one is inconvenient. For extra credit, write a client
+ * PhotoMagicDeluxe.java with the same API as PM_PhotoMagic.java, but use an
+ * alphanumeric password instead of a binary one. Assume that the password
+ * contains only characters from the 64-character alphabet:
+ * 
+ * String base64 =
+ * "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+ * 
+ * @author PMARINA
+ * @version 09/21/2016
+ */
+public class PM_LFSR {
+	private String seed;
+	private int tap;
+
+	/**
+	 * @param seed
+	 *            the seed for the lfsr
+	 * @param t
+	 *            the tap
+	 */
+	public PM_LFSR(String seed, int t) {
+		this.seed = seed;
+		this.tap = seed.length() - t - 1;// use -1 only if rightmost position is
+											// 0. Else, take out -1
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString() {
+		return seed;
+	}
+
+	/**
+	 * @return the xor value between the tap and the end position
+	 */
+	public int step() {
+		boolean xor = (Integer.parseInt(seed.substring(0, 1)) + Integer.parseInt(seed.substring(tap, tap + 1))) == 1;
+		String s = "\"";
+		if (xor)
+			s = "1";
+		else
+			s = "0";
+		seed = seed.substring(1, seed.length()) + s;
+		return Integer.parseInt(s);
+	}
+
+	/**
+	 * @param k
+	 *            the max number of bytes to make the number
+	 * @return the k-byte integer
+	 */
+	public int generate(int k) {
+		String a = "";
+		for (int i = 0; i < k; i++) {
+			int s = step();
+			a += Integer.toString(s);
+		}
+		return Integer.parseInt(a, 2);
+	}
+
+	/**
+	 * @param a
+	 *            the first binary string
+	 * @param b
+	 *            the second binary string
+	 * @return a string containing the xor between the two input binary strings
+	 */
+	public static String xor(String a, String b) {
+		String ret = "";
+		int an = Math.abs(a.length() - b.length());
+		String s = "";
+		for (int i = 0; i < an; i++)
+			s += "0";
+		if (a.length() < b.length())
+			a = s + a;
+		else
+			b = s + b;
+		for (int i = 0; i < a.length(); i++) {
+			ret += Integer.parseInt(a.substring(i, i + 1)) ^ Integer.parseInt(b.substring(i, i + 1));
+		}
+		return ret;
+	}
+
+}
