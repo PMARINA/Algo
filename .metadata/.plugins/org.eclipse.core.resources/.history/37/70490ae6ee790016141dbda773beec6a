@@ -1,0 +1,20 @@
+import java.util.Scanner;
+public class KochAreaCalc {
+	public static void main(String[] args){
+		Scanner sc = new Scanner(System.in);
+		System.out.println("What is the input to the Koch Program?");
+		int input = sc.nextInt();
+		System.out.println("The area is " + compute(input) + " square units.");
+	}
+	private static double compute(int n){
+		double area = 0;
+		for(int i = 0; i<=n; i++){
+			double numTriangles =  Math.pow(4, i);
+			double sideLength = 1.0 / Math.pow(3.0, n); 
+			double apothem = Math.sqrt(Math.pow(sideLength, 2)-Math.pow(sideLength/2.0, 2));
+			double areaPerTriangle = 0.5*apothem*sideLength;
+			area += numTriangles*areaPerTriangle;
+		}
+		return area;
+	}
+}

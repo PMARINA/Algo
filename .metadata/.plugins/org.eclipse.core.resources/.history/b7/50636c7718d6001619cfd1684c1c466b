@@ -1,0 +1,11 @@
+
+public class Node2LL {
+	double left;
+	double right;
+	int useXAxis;
+	public Node2LL(double left, double right, int useXAxis){
+		this.left = left;
+		this.right = right;
+		this.useXAxis = useXAxis;
+	}
+}

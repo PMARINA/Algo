@@ -1,0 +1,239 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class KDTreeST<Value> {
+	private static Node2LL node;
+
+	public boolean isEmpty(){
+		return node == null; 
+	}
+
+	public int size(){
+		if(!isEmpty()){
+			if(node.left == null && node.right == null)
+				return 1;
+			else if(node.left == null){
+				return getLengthBranch(node.right) +1;
+			}
+			else if(node.right == null)
+				return getLengthBranch(node.left)+1;
+			return getLengthBranch(node.left) + getLengthBranch(node.right) + 1;
+		}
+		else return 0;
+	}
+	private int getLengthBranch(Node2LL a){
+		if(a.left == null && a.right == null)
+			return 1;
+		else if(a.left == null)
+			return getLengthBranch(a.right);
+		else if(a.right == null)
+			return getLengthBranch(a.left);
+		else return getLengthBranch(a.right) + getLengthBranch(a.left);
+	}
+
+	public void put(Point2D p, Value val){
+		if(node == null){
+			node = new Node2LL<Value>(p.x(), p.y(), 1, null, null, val);
+		}
+		else{
+			Node2LL t = new Node2LL<Value>(p.x(), p.y(), -1, null, null, val);
+			putter(node, t);
+		}
+	}
+	private void putter(Node2LL n, Node2LL t){
+		if(n.useXAxis == 0){
+			//use y axis
+			if(n.y<t.y){
+				if(n.left == null){
+					t.useXAxis = 1;
+					n.left = t;
+				}
+				else{
+					putter(n.left, t);
+				}
+			}
+			if(n.y==t.y){
+				if(n.x>t.x){
+					if(n.left == null){
+						t.useXAxis = 1;
+						n.left = t;
+					}
+					else{
+						putter(n.left, t);
+					}
+				}
+				if(n.x<t.x){
+					if(n.right==null){
+						t.useXAxis = 1;
+						n.right = t;
+					}
+					else{
+						putter(n.right, t);
+					}
+				}
+				if(n.x==t.x){
+					n.v = t.v;
+				}
+			}
+			if(n.y<t.y){
+				if(n.right==null){
+					t.useXAxis = 1;
+					n.right = t;
+				}
+				else{
+					putter(n.right, t);
+				}
+			}
+		}
+		if(n.useXAxis == 1){
+			//use x axis
+			if(n.x<t.x){
+				if(n.left == null){
+					t.useXAxis = 0;
+					n.left = t;
+				}
+				else{
+					putter(n.left, t);
+				}
+			}
+			if(n.x==t.x){
+				if(n.y>t.y){
+					if(n.left == null){
+						t.useXAxis = 0;
+						n.left = t;
+					}
+					else{
+						putter(n.left, t);
+					}
+				}
+				if(n.y<t.y){
+					if(n.right==null){
+						t.useXAxis = 0;
+						n.right = t;
+					}
+					else{
+						putter(n.right, t);
+					}
+				}
+				if(n.y==t.y){
+					n.v = t.v;
+				}
+			}
+			if(n.x<t.x){
+				if(n.right==null){
+					t.useXAxis = 0;
+					n.right = t;
+				}
+				else{
+					putter(n.right, t);
+				}
+			}
+		}
+	}
+
+	public Value get(Point2D p){
+		 if(!isEmpty()){
+			 Node2LL<Value> t = new Node2LL<Value>(p.x(),p.y(),-1,null,null,null);
+			 return getter(node, t);
+		 }
+	}
+	private Value getter(Node2LL n, Node2LL t ){
+		if(n.useXAxis == 0){
+			//use y axis
+			if(n.y<t.y){
+				if(n.left == null){
+					t.useXAxis = 1;
+					n.left = t;
+				}
+				else{
+					putter(n.left, t);
+				}
+			}
+			if(n.y==t.y){
+				if(n.x>t.x){
+					if(n.left == null){
+						t.useXAxis = 1;
+						n.left = t;
+					}
+					else{
+						putter(n.left, t);
+					}
+				}
+				if(n.x<t.x){
+					if(n.right==null){
+						t.useXAxis = 1;
+						n.right = t;
+					}
+					else{
+						putter(n.right, t);
+					}
+				}
+				if(n.x==t.x){
+					n.v = t.v;
+				}
+			}
+			if(n.y<t.y){
+				if(n.right==null){
+					t.useXAxis = 1;
+					n.right = t;
+				}
+				else{
+					putter(n.right, t);
+				}
+			}
+		}
+		if(n.useXAxis == 1){
+			//use x axis
+			if(n.x<t.x){
+				if(n.left == null){
+					t.useXAxis = 0;
+					n.left = t;
+				}
+				else{
+					putter(n.left, t);
+				}
+			}
+			if(n.x==t.x){
+				if(n.y>t.y){
+					if(n.left == null){
+						return null;
+					}
+					else{
+						getter(n.left, t);
+					}
+				}
+				if(n.y<t.y){
+					if(n.right==null){
+						t.useXAxis = 0;
+						n.right = t;
+					}
+					else{
+						putter(n.right, t);
+					}
+				}
+				if(n.y==t.y){
+					n.v = t.v;
+				}
+			}
+			if(n.x<t.x){
+				if(n.right==null){
+					t.useXAxis = 0;
+					n.right = t;
+				}
+				else{
+					putter(n.right, t);
+				}
+			}
+		}
+	}
+
+	public           boolean contains(Point2D p)            // does the symbol table contain point p? 
+
+	public Iterable<Point2D> points()                       // all points in the symbol table 
+
+	public Iterable<Point2D> range(RectHV rect)             // all points that are inside the rectangle 
+
+	public           Point2D nearest(Point2D p)             // a nearest neighbor to point p; null if the symbol table is empty 
+
+	public static void main(String[] args)                  // unit testing of the methods (not graded) 
+}

@@ -1,0 +1,22 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class MergeSort {
+	Node first;
+	Node[] random;
+	public MergeSort(Node[] random){
+		this.random = random;
+	}
+	public void sort(){
+		List<Integer> a = new ArrayList<Integer>();
+		int numSplit = (int) Math.round(random.length/2.0);
+		for(int i = 0; i<random.length; i++){
+			a.add(numSplit);
+			numSplit = (int)Math.round(numSplit/2.0);
+		}
+		System.out.println(a.toString());
+	}
+	public static void main(String[] args){
+		MergeSort a = new MergeSort({new Node(), new Node(), new Node, new Node()}
+	}
+}

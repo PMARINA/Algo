@@ -1,0 +1,5 @@
+LAMMPS (18 Jun 2016-ICMS)
+WARNING: OMP_NUM_THREADS environment is not set. (../comm.cpp:90)
+  using 1 OpenMP thread(s) per MPI task
+exit
+ERROR: Unknown command: exit (../input.cpp:245)

@@ -1,0 +1,234 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class KDTreeST<Value> {
+	private static Node2LL node;
+
+	public boolean isEmpty() {
+		return getNode() == null;
+	}
+
+	public int size() {
+		if (!isEmpty()) {
+			if (getNode().getLeft() == null && getNode().getRight() == null)
+				return 1;
+			else if (getNode().getLeft() == null) {
+				return getLengthBranch(getNode().getRight()) + 1;
+			} else if (getNode().getRight() == null)
+				return getLengthBranch(getNode().getLeft()) + 1;
+			return getLengthBranch(getNode().getLeft()) + getLengthBranch(getNode().getRight()) + 1;
+		} else
+			return 0;
+	}
+
+	private int getLengthBranch(Node2LL a) {
+		if (a.getLeft() == null && a.getRight() == null)
+			return 1;
+		else if (a.getLeft() == null)
+			return getLengthBranch(a.getRight());
+		else if (a.getRight() == null)
+			return getLengthBranch(a.getLeft());
+		else
+			return getLengthBranch(a.getRight()) + getLengthBranch(a.getLeft());
+	}
+
+	public void put(Point2D p, Value val) {
+		if (getNode() == null) {
+			setNode(new Node2LL<Value>(p.x(), p.y(), 1, null, null, val));
+		} else {
+			Node2LL t = new Node2LL<Value>(p.x(), p.y(), -1, null, null, val);
+			putter(getNode(), t);
+		}
+	}
+
+	private void putter(Node2LL n, Node2LL t) {
+		if (n.useXAxis == 0) {
+			// use y axis
+			if (n.y > t.y) {
+				if (n.getLeft() == null) {
+					t.useXAxis = 1;
+					n.setLeft(t);
+				} else {
+					putter(n.getLeft(), t);
+				}
+			}
+			if (n.y == t.y) {
+				if (n.x > t.x) {
+					if (n.getLeft() == null) {
+						t.useXAxis = 1;
+						n.setLeft(t);
+					} else {
+						putter(n.getLeft(), t);
+					}
+				}
+				if (n.x < t.x) {
+					if (n.getRight() == null) {
+						t.useXAxis = 1;
+						n.setRight(t);
+					} else {
+						putter(n.getRight(), t);
+					}
+				}
+				if (n.x == t.x) {
+					n.v = t.v;
+				}
+			}
+			if (n.y < t.y) {
+				if (n.getRight() == null) {
+					t.useXAxis = 1;
+					n.setRight(t);
+				} else {
+					putter(n.getRight(), t);
+				}
+			}
+		}
+		if (n.useXAxis == 1) {
+			// use x axis
+			if (n.x > t.x) {
+				if (n.getLeft() == null) {
+					t.useXAxis = 0;
+					n.setLeft(t);
+				} else {
+					putter(n.getLeft(), t);
+				}
+			}
+			if (n.x == t.x) {
+				if (n.y > t.y) {
+					if (n.getLeft() == null) {
+						t.useXAxis = 0;
+						n.setLeft(t);
+					} else {
+						putter(n.getLeft(), t);
+					}
+				}
+				if (n.y < t.y) {
+					if (n.getRight() == null) {
+						t.useXAxis = 0;
+						n.setRight(t);
+					} else {
+						putter(n.getRight(), t);
+					}
+				}
+				if (n.y == t.y) {
+					n.v = t.v;
+				}
+			}
+			if (n.x < t.x) {
+				if (n.getRight() == null) {
+					t.useXAxis = 0;
+					n.setRight(t);
+				} else {
+					putter(n.getRight(), t);
+				}
+			}
+		}
+	}
+
+	public Value get(Point2D p) {
+		if (!isEmpty()) {
+			Node2LL<Value> t = new Node2LL<Value>(p.x(), p.y(), -1, null, null, null);
+			return (Value) getter(getNode(), t);
+		}
+	}
+
+	private Value getter(Node2LL<Value> n, Node2LL<Value> t){
+		if(n.useXAxis == 0){
+			//use y axis
+			if(n.y>t.y){
+				if(n.getLeft() == null){
+					return null;
+				}
+				else{
+					getter(n.getLeft(), t);
+				}
+			}
+			if(n.y==t.y){
+				if(n.x>t.x){
+					if(n.getLeft() == null){
+						return null;
+					}
+					else{
+						getter(n.getLeft(), t);
+					}
+				}
+				if(n.x<t.x){
+					if(n.getRight()==null){
+						return null;
+					}
+					else{
+						getter(n.getRight(), t);
+					}
+				}
+				if(n.x==t.x){
+					return (Value) n.v;
+				}
+			}
+			if(n.y<t.y){
+				if(n.getRight()==null){
+					return null;
+				}
+				else{
+					getter(n.getRight(), t);
+				}
+			}
+		}
+		if(n.useXAxis == 1){
+			//use x axis
+			if(n.x>t.x){
+				if(n.getLeft() == null){
+					return null;
+				}
+				else{
+					getter(n.getLeft(), t);
+				}
+			}
+			if(n.x==t.x){
+				if(n.y>t.y){
+					if(n.getLeft() == null){
+						return null;
+					}
+					else{
+						getter(n.getLeft(), t);
+					}
+				}
+				if(n.y<t.y){
+					if(n.getRight()==null){
+						return null;
+					}
+					else{
+						getter(n.getRight(), t);
+					}
+				}
+				if(n.y==t.y){
+					return (Value) n.v;
+				}
+			}
+			if(n.x<t.x){
+				if(n.getRight()==null){
+					return null;
+				}
+				else{
+					getter(n.getRight(), t);
+				}
+			}
+		}
+	}
+
+	public           boolean contains(Point2D p)            // does the symbol table contain point p? 
+
+	public Iterable<Point2D> points()                       // all points in the symbol table 
+
+	public Iterable<Point2D> range(RectHV rect)             // all points that are inside the rectangle 
+
+	public           Point2D nearest(Point2D p)             // a nearest neighbor to point p; null if the symbol table is empty 
+
+	public static void main(String[] args)                  // unit testing of the methods (not graded) 
+}
+
+	public static Node2LL getNode() {
+		return node;
+	}
+
+	public static void setNode(Node2LL node) {
+		KDTreeST.node = node;
+	}

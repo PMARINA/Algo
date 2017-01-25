@@ -1,0 +1,22 @@
+import java.util.LinkedList;
+public class MergeSort implements Sorter {
+	private static int x = 0;
+	private static int y = 0;
+	@Override
+	public int[] location() {
+		return new int{x,y};
+	}
+
+	@Override
+	public LinkedList sort(LinkedList aList) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setBoundaries(int side) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+}

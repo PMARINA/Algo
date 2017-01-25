@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;LSFR.java&apos; to &apos;LFSR.java&apos;&#x0D;&#x0A;- Original project: &apos;Encryption&apos;&#x0D;&#x0A;- Original element: &apos;LSFR.java&apos;&#x0D;&#x0A;- Renamed element: &apos;LFSR.java&apos;" description="Rename compilation unit &apos;LSFR.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;{LSFR.java" name="LFSR.java" references="false" stamp="1474497056509" version="1.0"/>
+</session>

@@ -1,0 +1,15 @@
+
+public class Node2LL {
+	Node2LL left;
+	Node2LL right;
+	double x;
+	double y;
+	int useXAxis;
+	public Node2LL(double x, double y, int useXAxis, Node2LL left, Node2LL right){
+		this.left = left;
+		this.right = right;
+		this.useXAxis = useXAxis;
+		this.x = x;
+		this.y = y;
+	}
+}

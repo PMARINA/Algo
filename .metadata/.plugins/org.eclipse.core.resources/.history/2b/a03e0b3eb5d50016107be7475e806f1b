@@ -1,0 +1,101 @@
+import java.util.Comparator;
+import java.util.TreeMap;
+
+public class KDTreeST<Value> {
+	TreeMap<Double, TreeMap<Double, Point2D>> x;
+	TreeMap<Double, Point2D> y;r
+	
+	public KDTreeST() {
+		Comparator<Double> compObj = new Comparator<Double>(){
+
+			@Override
+			public int compare(Double o1, Double o2) {
+				double x = o1.y()-o2.y();
+				if(x == 0.0){
+					return 0;
+				}
+				else{
+					if( x>0.0){
+						return 1;
+					}
+					else{
+						return -1;
+					}
+				}
+			}
+		};
+		Comparator<Point2D> compY = new Comparator<Point2D>(){
+
+			@Override
+			public int compare(Point2D o1, Point2D o2) {
+				double x = o1.y()-o2.y();
+				if(x == 0.0){
+					return 0;
+				}
+				else{
+					if( x>0.0){
+						return 1;
+					}
+					else{
+						return -1;
+					}
+				}
+			}
+		};
+		Comparator<Point2D> compX = new Comparator<Point2D>(){
+			@Override
+			public int compare(Point2D o1, Point2D o2) {
+				double x = o1.x()-o2.x();
+				if(x == 0.0){
+					return 0;
+				}
+				else{
+					if( x>0.0){
+						return 1;
+					}
+					else{
+						return -1;
+					}
+				}
+			}
+		};
+		TreeMap y = new TreeMap(compY);
+		TreeMap x = new TreeMap(compX);
+	}
+
+	public boolean isEmpty() {
+		// is the symbol table empty?
+	}
+
+	public int size() {
+		// number of points
+	}
+
+	public void put(Point2D p, Value val) {
+		// associate the value val with point p
+	}
+
+	public Value get(Point2D p) {
+		// value associated with point p
+	}
+
+	public boolean contains(Point2D p) {
+		// does the symbol table contain point p?
+	}
+
+	public Iterable<Point2D> points() {
+		// all points in the symbol table
+	}
+
+	public Iterable<Point2D> range(RectHV rect) {
+		// all points that are inside the rectangle
+	}
+
+	public Point2D nearest(Point2D p) {
+		// a nearest neighbor to point p; null if the symbol table is empty
+	}
+
+	public static void main(String[] args) {
+		// unit testing of the methods (not graded)
+	}
+}
